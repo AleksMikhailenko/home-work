@@ -6,9 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.io.IOException;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,31 +18,22 @@ class AccountRepositoryTest {
 
     @BeforeEach
     public void setUp() {
-        Set<Account> accountsFirstClient = new HashSet<Account>() {{
-            add(new Account("ACC1234NUM"));
-            add(new Account("ACC4567NUM"));
-        }};
-
-        Map<Long, Set<Account>> accounts = new HashMap<Long, Set<Account>>() {{
-            put(1L, accountsFirstClient);
-        }};
-
-        accountRepository = new AccountRepositoryImpl(accounts);
+        accountRepository = new AccountRepositoryImpl("src/main/resources/Accounts.txt");
     }
 
     @Test
-    public void shouldProperlyGetAccountsById() {
+    public void shouldProperlyGetAccountsById() throws IOException {
         // when
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
 
         // then
-        assertEquals(2, allAccountsByClientId.size());
+        assertEquals(3, allAccountsByClientId.size());
     }
 
     @Test
-    public void shouldDefineWhenClientAccountExist() {
+    public void shouldDefineWhenClientAccountExist() throws IOException {
         // given
-        Account account = new Account("ACC4567NUM");
+        Account account = new Account(1L, "1-ACCNUM");
 
         // when
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
@@ -54,20 +43,14 @@ class AccountRepositoryTest {
     }
 
     @Test
-    public void shouldDefineWhenClientAccountDoesNotExist() {
+    public void shouldDefineWhenClientAccountDoesNotExist() throws IOException {
         // given
-        Account account = new Account("ACC0989NUM");
+        Account account = new Account(1L, "3-ACCNUM");
 
         // when
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
 
         // then
         assertFalse(allAccountsByClientId.contains(account));
-    }
-
-    @Test
-    public void shouldReturnNullWhenClientIdDoesNotExist() {
-
-        assertNull(accountRepository.getAllAccountsByClientId(56L));
     }
 }

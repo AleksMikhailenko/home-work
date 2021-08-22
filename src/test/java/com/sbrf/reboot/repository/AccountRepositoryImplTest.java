@@ -1,6 +1,7 @@
 package com.sbrf.reboot.repository;
 
-import org.junit.jupiter.api.Assertions;
+import com.sbrf.reboot.repository.entity.Account;
+import com.sbrf.reboot.repository.impl.AccountRepositoryImpl;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -15,34 +16,45 @@ class AccountRepositoryImplTest {
 
     AccountRepository accountRepository;
 
-
     @Test
     void onlyPersonalAccounts() throws IOException {
-        accountRepository = new AccountRepositoryImpl("src/main/resources/Accounts.txt");
-        Set<String> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1);
-        ArrayList<String> strings = new ArrayList<String>() {{
-            add("2-ACCNUM");
-            add("1-ACCNUM");
-            add("4-ACC1NUM");
+        accountRepository = new AccountRepositoryImpl("src/test/resources/Accounts.txt");
+        Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
+        ArrayList<Account> accounts = new ArrayList<Account>() {{
+            add(new Account(1L, "2-ACCNUM"));
+            add(new Account(1L, "1-ACCNUM"));
+            add(new Account(1L, "4-ACC1NUM"));
         }};
 
-        assertTrue(strings.containsAll(allAccountsByClientId));
+        assertTrue(accounts.containsAll(allAccountsByClientId));
     }
 
     @Test
     void successGetAllAccountsByClientId() throws IOException {
-        accountRepository = new AccountRepositoryImpl("src/main/resources/Accounts.txt");
-        Set<String> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1);
-        Assertions.assertTrue(allAccountsByClientId.contains("5-ACC1NUM"));
+        accountRepository = new AccountRepositoryImpl("src/test/resources/Accounts.txt");
+        Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
+        assertTrue(allAccountsByClientId.contains(new Account(1L, "4-ACC1NUM")));
     }
 
     @Test
     void failGetAllAccountsByClientId() {
         accountRepository = new AccountRepositoryImpl("somePath");
-        assertThrows(FileNotFoundException.class, () -> {
-            accountRepository.getAllAccountsByClientId(1L);
-        });
+        assertThrows(FileNotFoundException.class,
+                () -> accountRepository.getAllAccountsByClientId(1L));
     }
 
+    @Test
+    void successUpdateAccountNumberByClientId() throws IOException {
+        accountRepository = new AccountRepositoryImpl("src/test/resources/UpdatedAccounts.txt");
+        accountRepository.updateAccountNumberByClientId(1L, "2-ACCNUM", "99-ACCNUM");
+        Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
+        assertTrue(allAccountsByClientId.contains(new Account(1L, "99-ACCNUM")));
+    }
 
+    @Test
+    void failUpdateAccountNumberByClientId() {
+        accountRepository = new AccountRepositoryImpl("somePath");
+        assertThrows(FileNotFoundException.class,
+                () -> accountRepository.updateAccountNumberByClientId(1L, "2-ACCNUM", "99-ACCNUM"));
+    }
 }
