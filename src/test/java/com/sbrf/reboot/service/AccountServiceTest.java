@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,9 +33,9 @@ class AccountServiceTest {
     }
 
     @Test
-    void bookExist() {
+    void bookExist() throws IOException {
         // given
-        Account account = new Account("ACC1234NUM");
+        Account account = new Account(1, "ACC1234NUM");
         Set<Account> accounts = new HashSet<>();
         accounts.add(account);
 
@@ -46,16 +47,16 @@ class AccountServiceTest {
     }
 
     @Test
-    void bookNotExist() {
+    void bookNotExist() throws IOException {
         // given
         Set<Account> accounts = new HashSet<Account>() {{
-            add(new Account("ACC1234NUM"));
+            add(new Account(1, "ACC1234NUM"));
         }};
 
         // when
         when(accountRepository.getAllAccountsByClientId(1L)).thenReturn(accounts);
 
         // then
-        assertFalse(accountService.isAccountExist(1L, new Account("ACC456NUM")));
+        assertFalse(accountService.isAccountExist(1L, new Account(1, "ACC456NUM")));
     }
 }
