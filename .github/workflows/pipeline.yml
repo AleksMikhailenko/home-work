@@ -5,39 +5,43 @@ name: Java CI with Maven
 
 on:
   push:
-    branches:
-      - master
-      - develop
+    branches: [ master, develop ]
   pull_request:
-    branches:
-      - master
-      - develop
+    branches: [ master, develop ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        java: [ '8.0.302+8', '11.0.12+7' ]
+        java-sonar-enable: [ '11.0.12+7' ]
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 1.8
+      - name: Cache SonarCloud packages
+        if: contains(${{ matrix.java }}, ${{ matrix.java-sonar-enable }})
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v2
         with:
-          java-version: '8.0.302+8'
           distribution: 'adopt'
+          java-version: ${{ matrix.java }}
       - name: Build with Maven
+        if: !contains(${{ matrix.java }}, ${{ matrix.java-sonar-enable }})
         run: mvn -B package --file pom.xml
-#      - name: Cache SonarCloud packages
-#        uses: actions/cache@v1
-#        with:
-#          path: ~/.sonar/cache
-#          key: ${{ runner.os }}-sonar
-#          restore-keys: ${{ runner.os }}-sonar
-#      - name: Cache Maven packages
-#        uses: actions/cache@v1
-#        with:
-#          path: ~/.m2
-#          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-#          restore-keys: ${{ runner.os }}-m2
-#      - name: Build and analyze
-#        env:
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AleksMikhailenko_home-work
+      - name: Build with Maven and Analize with Sonar
+        if: contains(${{ matrix.java }}, ${{ matrix.java-sonar-enable }})
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AleksMikhailenko_home-work
