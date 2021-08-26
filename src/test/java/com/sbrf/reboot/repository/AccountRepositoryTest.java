@@ -17,12 +17,12 @@ class AccountRepositoryTest {
     private AccountRepository accountRepository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         accountRepository = new AccountRepositoryImpl("src/main/resources/Accounts.txt");
     }
 
     @Test
-    public void shouldProperlyGetAccountsById() throws IOException {
+    void shouldProperlyGetAccountsById() throws IOException {
         // when
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
 
@@ -31,7 +31,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    public void shouldDefineWhenClientAccountExist() throws IOException {
+    void shouldDefineWhenClientAccountExist() throws IOException {
         // given
         Account account = new Account(1L, "1-ACCNUM");
 
@@ -43,7 +43,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    public void shouldDefineWhenClientAccountDoesNotExist() throws IOException {
+    void shouldDefineWhenClientAccountDoesNotExist() throws IOException {
         // given
         Account account = new Account(1L, "3-ACCNUM");
 
