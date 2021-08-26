@@ -39,7 +39,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line.replaceAll(" ", ""));
+                stringBuilder.append(line.replace(" ", ""));
             }
         }
 

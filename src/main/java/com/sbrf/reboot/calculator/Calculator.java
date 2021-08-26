@@ -5,6 +5,9 @@ package com.sbrf.reboot.calculator;
  */
 public class Calculator {
 
+    private Calculator() {
+    }
+
     /**
      * Addition of two {@code int} values.
      *
