@@ -1,6 +1,6 @@
 package com.sbrf.reboot.repository;
 
-import com.sbrf.reboot.repository.entity.Account;
+import com.sbrf.reboot.dto.Account;
 import com.sbrf.reboot.repository.impl.AccountRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +33,7 @@ class AccountRepositoryTest {
     @Test
     void shouldDefineWhenClientAccountExist() throws IOException {
         // given
-        Account account = new Account(1L, "1-ACCNUM");
+        Account account = Account.builder().id(1L).accountNumber("1-ACCNUM").build();
 
         // when
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
@@ -45,7 +45,7 @@ class AccountRepositoryTest {
     @Test
     void shouldDefineWhenClientAccountDoesNotExist() throws IOException {
         // given
-        Account account = new Account(1L, "3-ACCNUM");
+        Account account = Account.builder().id(1L).accountNumber("3-ACCNUM").build();
 
         // when
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);

@@ -1,6 +1,6 @@
 package com.sbrf.reboot.service;
 
-import com.sbrf.reboot.repository.entity.Account;
+import com.sbrf.reboot.dto.Account;
 
 import java.io.IOException;
 

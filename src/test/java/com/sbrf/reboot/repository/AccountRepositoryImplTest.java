@@ -1,6 +1,6 @@
 package com.sbrf.reboot.repository;
 
-import com.sbrf.reboot.repository.entity.Account;
+import com.sbrf.reboot.dto.Account;
 import com.sbrf.reboot.repository.impl.AccountRepositoryImpl;
 import org.junit.jupiter.api.Test;
 
@@ -21,9 +21,9 @@ class AccountRepositoryImplTest {
         accountRepository = new AccountRepositoryImpl("src/test/resources/Accounts.txt");
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
         ArrayList<Account> accounts = new ArrayList<Account>() {{
-            add(new Account(1L, "2-ACCNUM"));
-            add(new Account(1L, "1-ACCNUM"));
-            add(new Account(1L, "4-ACC1NUM"));
+            add(Account.builder().id(1L).accountNumber("2-ACCNUM").build());
+            add(Account.builder().id(1L).accountNumber("1-ACCNUM").build());
+            add(Account.builder().id(1L).accountNumber("4-ACC1NUM").build());
         }};
 
         assertTrue(accounts.containsAll(allAccountsByClientId));
@@ -33,7 +33,7 @@ class AccountRepositoryImplTest {
     void successGetAllAccountsByClientId() throws IOException {
         accountRepository = new AccountRepositoryImpl("src/test/resources/Accounts.txt");
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
-        assertTrue(allAccountsByClientId.contains(new Account(1L, "4-ACC1NUM")));
+        assertTrue(allAccountsByClientId.contains(Account.builder().id(1L).accountNumber("4-ACC1NUM").build()));
     }
 
     @Test
@@ -48,7 +48,7 @@ class AccountRepositoryImplTest {
         accountRepository = new AccountRepositoryImpl("src/test/resources/UpdatedAccounts.txt");
         accountRepository.updateAccountNumberByClientId(1L, "2-ACCNUM", "99-ACCNUM");
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
-        assertTrue(allAccountsByClientId.contains(new Account(1L, "99-ACCNUM")));
+        assertTrue(allAccountsByClientId.contains(Account.builder().id(1L).accountNumber("99-ACCNUM").build()));
     }
 
     @Test
