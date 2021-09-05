@@ -1,7 +1,7 @@
 package com.sbrf.reboot.service.impl;
 
+import com.sbrf.reboot.dto.Account;
 import com.sbrf.reboot.repository.AccountRepository;
-import com.sbrf.reboot.repository.entity.Account;
 import com.sbrf.reboot.service.AccountService;
 import lombok.AllArgsConstructor;
 

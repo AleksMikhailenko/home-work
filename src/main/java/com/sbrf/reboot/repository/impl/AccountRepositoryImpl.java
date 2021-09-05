@@ -1,7 +1,7 @@
 package com.sbrf.reboot.repository.impl;
 
+import com.sbrf.reboot.dto.Account;
 import com.sbrf.reboot.repository.AccountRepository;
-import com.sbrf.reboot.repository.entity.Account;
 import lombok.AllArgsConstructor;
 
 import java.io.*;
@@ -19,7 +19,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         Set<String> allClientAccountsNumber = retrieveAllClientAccountsNumber(data, id);
 
         return allClientAccountsNumber.stream()
-                .map(accountNumber -> new Account(id, accountNumber))
+                .map(accountNumber -> Account.builder().id(id).accountNumber(accountNumber).build())
                 .collect(Collectors.toSet());
     }
 
@@ -69,7 +69,7 @@ public class AccountRepositoryImpl implements AccountRepository {
             String[] split = obj.replaceAll("[\\[\\]{}\"]", "").split("[: ,]");
             long key = Long.parseLong(split[1]);
             map.computeIfAbsent(key, k -> new ArrayList<>())
-                    .add(new Account(key, split[3]));
+                    .add(Account.builder().id(key).accountNumber(split[3]).build());
         }
         return map;
     }
@@ -78,7 +78,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         for (int i = 0; i < accounts.size(); i++) {
             Account elem = accounts.get(i);
             if (elem.getAccountNumber().equals(oldNumber)) {
-                accounts.set(i, new Account(id, newNumber));
+                accounts.set(i, Account.builder().id(id).accountNumber(newNumber).build());
             }
         }
     }
