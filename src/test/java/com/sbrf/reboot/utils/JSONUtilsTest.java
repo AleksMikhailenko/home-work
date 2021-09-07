@@ -25,13 +25,13 @@ class JSONUtilsTest {
 
     @Test
     void JSONtoRequest() throws JsonProcessingException {
-        Request request = JSONUtils.JSONtoRequest("{\"atmNumber\":\"ATM12345\"}");
+        Request request = JSONUtils.fromJSONtoRequest("{\"atmNumber\":\"ATM12345\"}");
         Assertions.assertEquals("ATM12345", request.getAtmNumber());
     }
 
     @Test
     void JSONtoResponse() throws JsonProcessingException {
-        Response request = JSONUtils.JSONtoResponse("{\"statusCode\":\"SUCCESS\"}");
+        Response request = JSONUtils.fromJSONtoResponse("{\"statusCode\":\"SUCCESS\"}");
         Assertions.assertEquals("SUCCESS", request.getStatusCode());
     }
 
