@@ -2,11 +2,11 @@ package com.sbrf.reboot.repository;
 
 import com.sbrf.reboot.dto.Account;
 import com.sbrf.reboot.repository.impl.AccountRepositoryImpl;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,8 +21,9 @@ class AccountRepositoryTest {
         accountRepository = new AccountRepositoryImpl("src/main/resources/Accounts.txt");
     }
 
+    @SneakyThrows
     @Test
-    void shouldProperlyGetAccountsById() throws IOException {
+    void shouldProperlyGetAccountsById() {
         // when
         Set<Account> allAccountsByClientId = accountRepository.getAllAccountsByClientId(1L);
 
@@ -30,8 +31,9 @@ class AccountRepositoryTest {
         assertEquals(3, allAccountsByClientId.size());
     }
 
+    @SneakyThrows
     @Test
-    void shouldDefineWhenClientAccountExist() throws IOException {
+    void shouldDefineWhenClientAccountExist() {
         // given
         Account account = Account.builder().id(1L).accountNumber("1-ACCNUM").build();
 
@@ -42,8 +44,9 @@ class AccountRepositoryTest {
         assertTrue(allAccountsByClientId.contains(account));
     }
 
+    @SneakyThrows
     @Test
-    void shouldDefineWhenClientAccountDoesNotExist() throws IOException {
+    void shouldDefineWhenClientAccountDoesNotExist() {
         // given
         Account account = Account.builder().id(1L).accountNumber("3-ACCNUM").build();
 
