@@ -1,13 +1,14 @@
 package com.sbrf.reboot.utils;
 
 import com.sbrf.reboot.dto.Account;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.Comparator;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountUtils {
-    private AccountUtils() {
-    }
 
     public static void sortedById(List<Account> accounts) {
         accounts.sort(Comparator.comparingLong(Account::getId));
