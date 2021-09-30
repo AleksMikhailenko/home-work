@@ -41,7 +41,7 @@
         <sonar.organization>aleksmikhailenko</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <javax.servlet.version>4.0.1</javax.servlet.version>
-        <fallOnMissingWebXml>false</fallOnMissingWebXml>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
 
     <dependencies>
