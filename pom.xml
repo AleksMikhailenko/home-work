@@ -7,6 +7,7 @@
     <groupId>com.sbrf.reboot</groupId>
     <artifactId>home-work</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
 
@@ -39,6 +40,8 @@
 
         <sonar.organization>aleksmikhailenko</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <javax.servlet.version>4.0.1</javax.servlet.version>
+        <fallOnMissingWebXml>false</fallOnMissingWebXml>
     </properties>
 
     <dependencies>
@@ -70,6 +73,15 @@
             <artifactId>jackson-dataformat-xml</artifactId>
             <version>${jackson-dataformat-xml.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
