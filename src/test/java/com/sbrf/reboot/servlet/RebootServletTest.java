@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -54,5 +55,17 @@ class RebootServletTest {
         String result = sw.toString().trim();
 
         assertEquals("Hello <br>Counter = 2", result);
+    }
+
+    @SneakyThrows
+    @Test
+    void failIOException() {
+        when(request.getParameter("name")).thenReturn(null);
+        when(response.getWriter()).thenThrow(IOException.class);
+
+        servlet.doGet(request, response);
+        String result = sw.toString().trim();
+
+        assertEquals("", result);
     }
 }

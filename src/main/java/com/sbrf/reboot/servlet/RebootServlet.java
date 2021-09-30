@@ -16,12 +16,15 @@ public class RebootServlet extends HttpServlet {
     private static final AtomicInteger counter = new AtomicInteger();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         counter.getAndIncrement();
         String rawName = request.getParameter("name");
         response.setContentType("text/html");
-        PrintWriter printWriter = response.getWriter();
-        printWriter.write(String.format("Hello %s<br>", rawName == null ? "" : forHtml(rawName)));
-        printWriter.write(String.format("Counter = %s", counter));
+        try (PrintWriter printWriter = response.getWriter()) {
+            printWriter.write(String.format("Hello %s<br>", rawName == null ? "" : forHtml(rawName)));
+            printWriter.write(String.format("Counter = %s", counter));
+        } catch (IOException e) {
+            // some logic for handle error
+        }
     }
 }
