@@ -30,6 +30,11 @@ public class Account {
      */
     BigDecimal balance;
 
+    /**
+     * Account's currency
+     */
+    String currency;
+
     @Override
     public String toString() {
         return "{" + System.lineSeparator() +

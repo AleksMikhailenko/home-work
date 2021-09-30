@@ -14,6 +14,7 @@
 * [№7 - AccountUtils](#homework-7)
 * [№9 - json/xml serialization and deserialization utils](#homework-9)
 * [№11 - AccountService with Stream API](#homework-11)
+* [№14 - MainReport with CompletableFuture and Project Reactor](#homework-14)
 * [№15 - Java Servlet API](#homework-15)
 
 ---
@@ -121,6 +122,17 @@
 
 1. Придумать собственный метод для работы со счетами используя _Stream API_.
 2. Написать к нему тест.
+
+---
+
+## Homework 14
+
+#### Реализовать распараллеливание задач с помощью CompletableFuture и Project Reactor
+
+1. Реализовать методы `MainReport#getTotalsWithCompletableFuture` и `MainReport#getTotalsWithReact`
+2. Методы получают на вход _Stream_ и возвращает сумму балансов рублевых счетов открытых между 01.07.2021 и 01.08.2021 и
+   принадлежащих клиентам в возрасте между 18 и 30.
+3. Решение задачи должно использовать максимально доступное количество ядер процессора.
 
 ---
 
