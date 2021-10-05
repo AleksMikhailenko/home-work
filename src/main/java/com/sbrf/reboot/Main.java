@@ -13,12 +13,12 @@ public class Main {
         getContextFromJavaBasedConfig();
     }
 
-    private static Client getContextFromXML() {
+    public static Client getContextFromXML() {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         return context.getBean(Client.class);
     }
 
-    private static Client getContextFromJavaBasedConfig() {
+    public static Client getContextFromJavaBasedConfig() {
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         return context.getBean(Client.class);
     }
